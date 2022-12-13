@@ -147,3 +147,52 @@ let x = setInterval(function() {
 }
 
 startButton.addEventListener('click',timerFunction);
+
+
+
+//Capture highscores and save to location storage
+
+
+function captureUserHighScore() {
+
+    let input;
+
+    startScreen.classList.add('hide');
+    endScreen.classList.remove('hide');
+    questionsWrapper.classList.add('hide');
+    finalScore.textContent = score;
+    playerInitials.setAttribute("placeholder", "Enter up to 3 letters");
+
+    submitInitials.addEventListener('click', function(event) {
+
+        event.preventDefault();
+
+        var storage = localStorage.getItem("highScores");
+        var storageArr = JSON.parse(storage);
+
+        input = playerInitials.value;
+        let highscore = [input,score];
+
+        let array = [];
+        array.push(highscore);
+
+        if (storageArr != null) {
+
+        storageArr.forEach(arr => {
+            array.push(arr);
+        })      
+        
+        }
+
+        //sort top 10 and store to local storage
+
+        let sortedArray = array.sort((pre,post) => (pre[1] > post[1] ? -1 : 1)).slice(0,10);
+           
+        localStorage.setItem("highScores",JSON.stringify(sortedArray));
+
+          window.location.href = './highscores.html';      
+  
+    })
+
+
+};
