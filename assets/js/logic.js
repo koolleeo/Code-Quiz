@@ -4,7 +4,7 @@ let sfxWrong = new Audio("assets/sfx/incorrect.wav");
 
 // global varibles
 
-let countDown = 25;
+let countDown = 75;
 let deduct = 15;
 let questionCounter = 0;
 let totalQuestions = questions.length;
@@ -116,4 +116,34 @@ questionFeedback.classList.add('hide');
 
 }
 
-presentQuestions()
+
+//Timer element
+
+function timerFunction() {
+
+    presentQuestions()
+
+// Update the count down every 1 second
+let x = setInterval(function() {
+
+    endCounter = false;
+
+    countDown--;
+    timer.textContent = countDown;
+    
+    
+    if (countDown <= 0 || userAnswers.length === totalQuestions) {
+        endCounter = true;
+        score = countDown;
+    }
+    
+  // If the count down is over, write some text 
+  if (endCounter) {
+    clearInterval(x);
+    captureUserHighScore()
+  }
+}, 1000);
+
+}
+
+startButton.addEventListener('click',timerFunction);
