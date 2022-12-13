@@ -29,3 +29,45 @@ let finalScore = document.getElementById("final-score");
 let playerInitials = document.getElementById("initials"); 
 let submitInitials = document.getElementById("submit");
 let questionFeedback = document.getElementById("feedback") // default : class="feedback hide"
+
+
+// present questions
+
+function presentQuestions() {
+
+    let title;
+    let bt;
+
+if (questionCounter < totalQuestions && endCounter === false) {
+
+    //change classes within HTML to unhide questions and hide feedback
+    startScreen.classList.add('hide');
+    questionsWrapper.classList.remove('hide');
+    questionFeedback.classList.add('hide');
+
+    //find the index of the correct answer from the choices array
+    let questionsArr = questions[questionCounter].choices;
+    let answerIndex = questionsArr.indexOf(questions[questionCounter].answer);
+
+
+for (let i = 0; i < questions[questionCounter].choices.length; i++) {
+
+    //render questions title
+    title = questions[questionCounter].title;
+    questionTitle.textContent = title;
+
+    //create button element and add question as content
+    bt = document.createElement('button');
+    bt.textContent = `${i+1}: ${questions[questionCounter].choices[i]}`;
+
+    //render button to page
+    questionChoices.appendChild(bt);
+    bt.dataset.index = i;
+
+}
+
+}
+
+}
+
+presentQuestions()
