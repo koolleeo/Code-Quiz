@@ -156,6 +156,7 @@ startButton.addEventListener('click',timerFunction);
 function captureUserHighScore() {
 
     let input;
+    let rejectArray = /[0-9/!"£$%^&*()-_=+?><.,"]/g;
 
     startScreen.classList.add('hide');
     endScreen.classList.remove('hide');
@@ -182,6 +183,20 @@ function captureUserHighScore() {
             array.push(arr);
         })      
         
+        }
+
+        //reject invalid input
+
+        regexArray = input.toLowerCase().match(rejectArray);
+
+        if (regexArray !== null) {
+            alert("You cannot use special characters or numbers");
+            playerInitials.value = '';
+            return;
+        } else if (input.length > 3) {
+            alert("Max length exceeded. Please try again");
+            playerInitials.value = '';
+            return;
         }
 
         //sort top 10 and store to local storage
