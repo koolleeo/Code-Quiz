@@ -64,9 +64,55 @@ for (let i = 0; i < questions[questionCounter].choices.length; i++) {
     questionChoices.appendChild(bt);
     bt.dataset.index = i;
 
+    bt.addEventListener('click',(event) => {
+        
+        //capture key event data
+        let key = event.target.textContent;
+        let type = event.type;
+        let indexOfButtonPressed = event.target.dataset.index--;
+        let answer = questions[questionCounter].answer
+        let correct = false;
+
+        //conditions depending on whether correct answer is selected
+
+        if (indexOfButtonPressed ===answerIndex) {
+            correct = true;
+            sfxRight.play();
+            questionFeedback.textContent = rightAnswer;
+            questionFeedback.classList.remove('hide');
+        } else {
+            sfxWrong.play();
+            countDown -= 15;
+            questionFeedback.textContent = wrongAnswer;
+            questionFeedback.classList.remove('hide');
+        }
+
+        //push userAnswers to an array (may use this data if further metrics required for analysis)
+
+        userAnswers.push([key, indexOfButtonPressed, answer, correct, countDown]);
+        questionCounter++;
+    
+        //set 1 sec delay to ensure that feedback becomes visible for at least 1 second
+
+        setTimeout(() => {
+
+        //remove content and execute function again if more questions left
+
+        questionTitle.innerHTML = "";
+        questionChoices.innerHTML = "";
+        presentQuestions();
+
+        }, 1000);
+
+        clearTimeout();
+        
+    })
+
 }
 
 }
+
+questionFeedback.classList.add('hide');
 
 }
 
